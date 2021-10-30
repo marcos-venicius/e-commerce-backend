@@ -6,7 +6,7 @@ const cors = require('cors');
 require('dotenv/config');
 
 const { userRouter } = require('./routes/user');
-const { verify } = require('jsonwebtoken');
+const { productRouter } = require('./routes/product');
 
 const app = express();
 
@@ -20,6 +20,7 @@ app.use(
 app.use(morgan('dev'));
 
 app.use('/user', userRouter);
+app.use('/product', productRouter);
 
 const PORT = process.env.PORT || 8000;
 

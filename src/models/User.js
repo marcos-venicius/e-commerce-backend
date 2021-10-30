@@ -1,6 +1,7 @@
 const { v4 } = require('uuid');
 const { Model, DataTypes } = require('sequelize');
 const { sequelize } = require('../database');
+const { Product } = require('./Product');
 
 class User extends Model {}
 
@@ -46,9 +47,15 @@ User.init(
   {
     createdAt: 'created_at',
     updatedAt: 'updated_at',
+    tableName: 'users',
     sequelize,
   },
 );
+
+User.hasMany(Product, {
+  as: 'products',
+  foreignKey: 'user_id'
+});
 
 User.sync();
 
