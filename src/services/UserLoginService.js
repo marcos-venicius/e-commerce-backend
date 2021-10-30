@@ -16,7 +16,7 @@ class UserLoginService {
     });
 
     if (!user) {
-      return new Error('Email and/or password are incorrect');
+      return new Error('Email and/or password invalid');
     }
 
     const token = sign(
