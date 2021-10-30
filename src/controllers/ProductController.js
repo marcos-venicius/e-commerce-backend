@@ -1,4 +1,5 @@
 const { CreateProductService } = require('../services/CreateProductService');
+const { GetProductService } = require('../services/GetProductService');
 const { ListProductService } = require('../services/ListProductsService');
 
 class ProductController {
@@ -30,6 +31,20 @@ class ProductController {
     const result = await listProductService.execute(req.user_id);
 
     return res.json(result);
+  }
+
+  async one(req, res) {
+    const getProductService = new GetProductService();
+
+    const result = await getProductService.execute(req.user_id, req.params.id);
+
+    if (result instanceof Error) {
+      return res.status(404).json({
+        message: result.message,
+      });
+    } else {
+      return res.json(result);
+    }
   }
 }
 
