@@ -1,4 +1,5 @@
 const { CreateProductService } = require('../services/CreateProductService');
+const { ListProductService } = require('../services/ListProductsService');
 
 class ProductController {
   async create(req, res) {
@@ -19,6 +20,14 @@ class ProductController {
         error: result.message,
       });
     }
+
+    return res.json(result);
+  }
+
+  async all(req, res) {
+    const listProductService = new ListProductService();
+
+    const result = await listProductService.execute(req.user_id);
 
     return res.json(result);
   }

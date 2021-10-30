@@ -19,33 +19,38 @@ class CreateUserService {
       return new Error('This user already exists');
     }
 
-    const userObject = await User.create({
-      id: v4(),
-      username,
-      email,
-      password: md5(password),
-      photo,
-    });
+    try {
+      const userObject = await User.create({
+        id: v4(),
+        username,
+        email,
+        password: md5(password),
+        photo,
+      });
 
-    const userCreated = await userObject.save();
+      const userCreated = await userObject.save();
 
-    const token = sign(
-      {
-        id: userCreated.id,
-      },
-      this.secret,
-      {
-        expiresIn: 60 * 60,
-      },
-    );
+      const token = sign(
+        {
+          id: userCreated.id,
+        },
+        this.secret,
+        {
+          expiresIn: 60 * 60,
+        },
+      );
 
-    return {
-      data: {
-        token,
-        ...userCreated.toJSON(),
-        password: null,
-      },
-    };
+      return {
+        data: {
+          token,
+          ...userCreated.toJSON(),
+          password: null,
+        },
+      };
+    } catch (err) {
+
+      return new Error(err?.errors?.[0]?.message || err.message);
+    }
   }
 }
 
