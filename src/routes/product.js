@@ -8,5 +8,6 @@ const productController = new ProductController();
 
 productRouter.post('/create', authenticate, productController.create);
 productRouter.get('/all', authenticate, productController.all);
+productRouter.get('/one/:id', authenticate, productController.one);
 
 module.exports = { productRouter };
