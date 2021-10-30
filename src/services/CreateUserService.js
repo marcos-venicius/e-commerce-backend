@@ -1,5 +1,6 @@
 const { sign } = require('jsonwebtoken');
 const md5 = require('md5');
+const { v4 } = require('uuid');
 const { User } = require('../models/User');
 
 class CreateUserService {
@@ -19,6 +20,7 @@ class CreateUserService {
     }
 
     const userObject = await User.create({
+      id: v4(),
       username,
       email,
       password: md5(password),
