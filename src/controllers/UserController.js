@@ -1,5 +1,6 @@
 const { CreateUserService } = require('../services/CreateUserService');
 const { GetUserInformationService } = require('../services/GetUserInformationService');
+const { UserLoginService } = require('../services/UserLoginService');
 
 class UserController {
   async create(req, res) {
@@ -37,6 +38,22 @@ class UserController {
       ...result,
       password: null,
     });
+  }
+
+  async login(req, res) {
+    const { email, password } = req.body;
+
+    const userLoginService = new UserLoginService();
+
+    const result = await userLoginService.execute(email, password);
+
+    if (result instanceof Error) {
+      return res.status(401).json({
+        message: result.message,
+      });
+    }
+
+    return res.json(result);
   }
 }
 
