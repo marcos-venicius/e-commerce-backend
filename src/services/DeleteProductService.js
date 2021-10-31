@@ -5,6 +5,7 @@ class DeleteProductService {
     const result = await Product.findOne({
       where: {
         id: productId,
+        user_id: userId,
       },
     });
 
