@@ -1,11 +1,12 @@
 const { v4 } = require('uuid');
 const { Product } = require('../models/Product');
-const { User } = require('../models/User');
+const { UploadImageToS3Service } = require('./UploadImageToS3Service');
 
 class CreateProductService {
   constructor() {
     this.required = ['name', 'price', 'photo', 'user_id'];
   }
+
   async execute(product) {
     for (let requiredField of this.required) {
       if (!product[requiredField]) {
@@ -20,14 +21,18 @@ class CreateProductService {
       },
     });
 
-    const user = await User.findByPk(product.user_id);
-
-    if (!user) {
-      return new Error('The user that is trying to create this product does not exists');
-    }
-
     if (findProduct) {
       return new Error('Already exists a product with this same name');
+    }
+
+    const productUpload = new UploadImageToS3Service();
+
+    const file = Buffer.from(product.photo, 'base64');
+
+    const result = await productUpload.upload('product', file);
+
+    if (result instanceof Error) {
+      return result;
     }
 
     const productItem = await Product.create({
@@ -38,7 +43,7 @@ class CreateProductService {
       description: product.description || '',
       likes: 0,
       dislikes: 0,
-      photo: product.photo,
+      photo: result,
       user_id: product.user_id,
     });
 
