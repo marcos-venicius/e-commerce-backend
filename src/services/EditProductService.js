@@ -28,10 +28,6 @@ class EditProductService {
         type: Number(),
       },
       {
-        name: 'photo',
-        type: String(),
-      },
-      {
         name: 'description',
         type: String(),
       },

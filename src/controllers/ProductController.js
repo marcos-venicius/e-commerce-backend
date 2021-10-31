@@ -1,6 +1,7 @@
 const { CreateProductService } = require('../services/CreateProductService');
 const { DeleteProductService } = require('../services/DeleteProductService');
 const { EditProductService } = require('../services/EditProductService');
+const { EditProductImageService } = require('../services/EditProductImageService');
 const { GetProductService } = require('../services/GetProductService');
 const { LikeAndDislikeProductService } = require('../services/LikeAndDislikeProductService');
 const { ListProductService } = require('../services/ListProductsService');
@@ -135,6 +136,31 @@ class ProductController {
     }
 
     return res.status(201).json(result);
+  }
+
+  async editImage(req, res) {
+    const { photo } = req.body;
+    const { id } = req.params;
+
+    if (!photo) {
+      return res.status(400).json({
+        message: 'You need to send a photo',
+      });
+    }
+
+    const editProductImageService = new EditProductImageService();
+
+    const result = await editProductImageService.execute(photo, id);
+
+    if (result instanceof Error) {
+      return res.status(400).json({
+        message: result.message,
+      });
+    }
+
+    return res.status(201).json({
+      message: 'success',
+    });
   }
 }
 
