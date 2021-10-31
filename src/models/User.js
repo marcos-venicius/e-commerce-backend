@@ -54,7 +54,8 @@ User.init(
 
 User.hasMany(Product, {
   as: 'products',
-  foreignKey: 'user_id'
+  foreignKey: 'user_id',
+  onDelete: 'CASCADE',
 });
 
 User.sync();
