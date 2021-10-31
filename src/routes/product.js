@@ -13,5 +13,6 @@ productRouter.post('/delete/:id', authenticate, productController.destroy);
 productRouter.put('/like/:id', authenticate, productController.like);
 productRouter.put('/dislike/:id', authenticate, productController.dislike);
 productRouter.put('/edit/:id', authenticate, productController.edit);
+productRouter.put('/edit_image/:id', authenticate, productController.editImage);
 
 module.exports = { productRouter };
