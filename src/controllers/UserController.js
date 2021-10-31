@@ -1,4 +1,5 @@
 const { CreateUserService } = require('../services/CreateUserService');
+const { EditUserService } = require('../services/EditUserService');
 const { GetUserInformationService } = require('../services/GetUserInformationService');
 const { UserLoginService } = require('../services/UserLoginService');
 
@@ -54,6 +55,20 @@ class UserController {
     }
 
     return res.json(result);
+  }
+
+  async edit(req, res) {
+    const editUserService = new EditUserService();
+
+    const result = await editUserService.execute(req.user_id, req.body);
+
+    if (result instanceof Error) {
+      return res.status(400).json({
+        message: result.message,
+      });
+    }
+
+    return res.status(201).json(result);
   }
 }
 
