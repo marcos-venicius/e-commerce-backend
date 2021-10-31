@@ -29,8 +29,8 @@ class UploadImageToS3Service {
    * @param {("user"|"product")} type type of upload
    * @param {String} file base64 encoded image
    */
-  async upload(type, file) {
-    const name = String(v4()) + '.png';
+  async upload(type, file, imageName) {
+    const name = (imageName || String(v4())) + '.png';
 
     let path = null;
 

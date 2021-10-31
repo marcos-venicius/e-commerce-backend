@@ -1,4 +1,5 @@
 const { CreateUserService } = require('../services/CreateUserService');
+const { EditUserImageService } = require('../services/EditUserImageService');
 const { EditUserService } = require('../services/EditUserService');
 const { GetUserInformationService } = require('../services/GetUserInformationService');
 const { UploadImageToS3Service } = require('../services/UploadImageToS3Service');
@@ -87,6 +88,30 @@ class UserController {
     }
 
     return res.status(201).json(result);
+  }
+
+  async editImage(req, res) {
+    const { photo } = req.body;
+
+    if (!photo) {
+      return res.status(400).json({
+        message: 'You need to send a photo',
+      });
+    }
+
+    const editUserImageService = new EditUserImageService();
+
+    const result = await editUserImageService.execute(photo, req.user_id);
+
+    if (result instanceof Error) {
+      return res.status(400).json({
+        message: result.message,
+      });
+    }
+
+    return res.status(201).json({
+      message: 'success',
+    });
   }
 }
 

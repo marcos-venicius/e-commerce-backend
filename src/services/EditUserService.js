@@ -9,7 +9,7 @@ class EditUserService {
         type: String(),
       },
       {
-        name: 'photo',
+        name: 'email',
         type: String(),
       },
     ];
