@@ -22,7 +22,7 @@ class ProductController {
 
     if (result instanceof Error) {
       return res.status(400).json({
-        error: result.message,
+        message: result.message,
       });
     }
 

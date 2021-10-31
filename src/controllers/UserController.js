@@ -15,7 +15,7 @@ class UserController {
     const user = await createUserService.exists(email);
     if (user instanceof Error) {
       return res.status(400).json({
-        error: user.message,
+        message: user.message,
       });
     }
 
@@ -23,7 +23,7 @@ class UserController {
 
     if (uploadResult instanceof Error) {
       return res.status(400).json({
-        error: uploadResult.message,
+        message: uploadResult.message,
       });
     }
 
@@ -31,7 +31,7 @@ class UserController {
 
     if (result instanceof Error) {
       return res.status(400).json({
-        error: result.message,
+        message: result.message,
       });
     }
 
