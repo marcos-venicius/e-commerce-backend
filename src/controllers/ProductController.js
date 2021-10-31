@@ -1,4 +1,5 @@
 const { CreateProductService } = require('../services/CreateProductService');
+const { DeleteProductService } = require('../services/DeleteProductService');
 const { GetProductService } = require('../services/GetProductService');
 const { ListProductService } = require('../services/ListProductsService');
 
@@ -45,6 +46,17 @@ class ProductController {
     } else {
       return res.json(result);
     }
+  }
+
+  async destroy(req, res) {
+    const { id } = req.params;
+    const deleteProductService = new DeleteProductService();
+
+    await deleteProductService.execute(req.user_id, id);
+
+    return res.status(200).json({
+      message: 'success',
+    });
   }
 }
 
