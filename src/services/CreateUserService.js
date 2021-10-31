@@ -8,7 +8,7 @@ class CreateUserService {
     this.secret = process.env.JWT_SECRET;
   }
 
-  async execute(username, email, password, photo) {
+  async exists(email) {
     const user = await User.findOne({
       where: {
         email,
@@ -18,7 +18,9 @@ class CreateUserService {
     if (user) {
       return new Error('This user already exists');
     }
+  }
 
+  async execute(username, email, password, photo) {
     try {
       const userObject = await User.create({
         id: v4(),
@@ -48,7 +50,6 @@ class CreateUserService {
         },
       };
     } catch (err) {
-
       return new Error(err?.errors?.[0]?.message || err.message);
     }
   }
