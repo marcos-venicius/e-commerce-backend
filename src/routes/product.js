@@ -10,5 +10,7 @@ productRouter.post('/create', authenticate, productController.create);
 productRouter.get('/all', authenticate, productController.all);
 productRouter.get('/one/:id', authenticate, productController.one);
 productRouter.post('/delete/:id', authenticate, productController.destroy);
+productRouter.put('/like/:id', authenticate, productController.like);
+productRouter.put('/dislike/:id', authenticate, productController.dislike);
 
 module.exports = { productRouter };

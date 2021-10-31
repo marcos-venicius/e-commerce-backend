@@ -1,4 +1,3 @@
-
 # USER
 
 - User that can handle with the products of your e-commerce
@@ -21,8 +20,7 @@
 7. photo
 8. user_id
 
-
-# STEPS
+# FUNCTIONALITIES
 
 - [x] CREATE USER AND RETURN JWT TOKEN
 - [x] CREATE MIDDLEWARE TO ATUTHENTICATE USER
@@ -32,3 +30,5 @@
 - [x] GET PRODUCT FROM AN USER
 - [x] LOGIN
 - [x] DELETE PRODUCT
+- [x] LIKE PRODUCT
+- [x] DISLIKE PRODUCT
