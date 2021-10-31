@@ -1,4 +1,5 @@
 const { Product } = require('../models/Product');
+const { ValidateFieldsService } = require('./ValidateFieldsService');
 
 class EditProductService {
   async execute(userId, productId, newObject) {
@@ -35,35 +36,16 @@ class EditProductService {
         type: String(),
       },
     ];
-    const keys = Object.keys(newObject);
 
-    const objectToUpdate = {};
+    const validateFieldsService = new ValidateFieldsService(newObject, allowedFields);
+    const objectToUpdate = validateFieldsService.execute();
 
-    for (let key of keys) {
-      const af = allowedFields.find(x => x.name === key);
-      if (af) {
-        const value = newObject[key];
-        if (typeof af.type === 'string') {
-          if (value && String(value).length > 0) {
-            objectToUpdate[key] = String(value);
-          } else {
-            return new Error(`The field ${key} is an invalid string`);
-          }
-        } else if (typeof af.type === 'number') {
-          if (!Number.isNaN(Number(value)) && Number(value) >= 0) {
-            objectToUpdate[key] = Number(value);
-          } else {
-            return new Error(`The field ${key} is an invalid number`);
-          }
-        }
-      } else {
-        return new Error(`The field ${key} does not exists or cannot be updated`);
-      }
+    if (objectToUpdate instanceof Error) {
+      return objectToUpdate;
     }
 
     if (Object.keys(objectToUpdate).length !== 0) {
       await Product.update(objectToUpdate, {
-        returning: true,
         where: {
           id: productId,
           user_id: userId,
