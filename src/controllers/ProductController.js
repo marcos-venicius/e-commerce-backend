@@ -18,7 +18,10 @@ class ProductController {
 
     const createProductService = new CreateProductService();
 
-    const result = await createProductService.execute(product);
+    const result = await createProductService.execute({
+      ...product,
+      user_id: req.user_id,
+    });
 
     if (result instanceof Error) {
       return res.status(400).json({
