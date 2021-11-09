@@ -80,7 +80,7 @@ class ProductController {
       });
     }
 
-    const likeAndDislikeProductService = new LikeAndDislikeProductService(id);
+    const likeAndDislikeProductService = new LikeAndDislikeProductService(id, req.user_id);
 
     const result = await likeAndDislikeProductService.like();
 
@@ -104,7 +104,7 @@ class ProductController {
       });
     }
 
-    const likeAndDislikeProductService = new LikeAndDislikeProductService(id);
+    const likeAndDislikeProductService = new LikeAndDislikeProductService(id, req.user_id);
 
     const result = await likeAndDislikeProductService.dislike();
 
