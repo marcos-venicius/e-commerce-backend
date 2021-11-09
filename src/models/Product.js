@@ -1,5 +1,6 @@
 const { v4 } = require('uuid');
 const { Model, DataTypes } = require('sequelize');
+
 const { sequelize } = require('../database');
 
 class Product extends Model {}
@@ -58,6 +59,16 @@ Product.init(
 Product.associations = models => {
   Product.belongsTo(models.User, {
     as: 'user',
+  });
+  Product.hasMany(models.User, {
+    foreignKey: 'product_id',
+    as: 'likes_list',
+    onDelete: 'CASCADE',
+  });
+  Product.hasMany(models.Dislikes, {
+    foreignKey: 'product_id',
+    as: 'dislikes_list',
+    onDelete: 'CASCADE',
   });
 };
 

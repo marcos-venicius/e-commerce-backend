@@ -1,7 +1,10 @@
 const { v4 } = require('uuid');
 const { Model, DataTypes } = require('sequelize');
-const { sequelize } = require('../database');
+
+const { Likes } = require('./Likes');
 const { Product } = require('./Product');
+const { Dislikes } = require('./Dislikes');
+const { sequelize } = require('../database');
 
 class User extends Model {}
 
@@ -57,6 +60,18 @@ User.hasMany(Product, {
   foreignKey: 'user_id',
   onDelete: 'CASCADE',
 });
+
+User.hasMany(Likes, {
+  as: 'likes_list',
+  foreignKey: "user_id",
+  onDelete: "CASCADE",
+})
+
+User.hasMany(Dislikes, {
+  as: 'dislikes_list',
+  foreignKey: "user_id",
+  onDelete: "CASCADE",
+})
 
 User.sync();
 
