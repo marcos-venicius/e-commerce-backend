@@ -37,7 +37,7 @@ describe("TEST 'ADD/UPDATE TO/IN CART' SERVICE", () => {
     }
   });
 
-  test('Create product for this user', async () => {
+  test('Create product', async () => {
     const createProductService = new CreateProductService();
 
     const result = await createProductService.execute({
@@ -56,7 +56,7 @@ describe("TEST 'ADD/UPDATE TO/IN CART' SERVICE", () => {
     }
   });
 
-  test('Add this product to cart with this user', async () => {
+  test('Add product into cart', async () => {
     const addToCartService = new AddToCartService(productId, userId, 2);
 
     const result = await addToCartService.execute();
@@ -75,6 +75,28 @@ describe("TEST 'ADD/UPDATE TO/IN CART' SERVICE", () => {
 
     if (!(product instanceof Error)) {
       expect(product.quantity).toBe(3);
+    }
+  });
+
+  test('Update cart', async () => {
+    const addToCartService = new AddToCartService(productId, userId, 1);
+
+    const result = await addToCartService.execute();
+
+    expect(result).not.toBeInstanceOf(Error);
+
+    if (!(result instanceof Error)) {
+      expect(result.quantity).toBe(3);
+    }
+
+    const getProductService = new GetProductService();
+
+    const product = await getProductService.execute(userId, productId);
+
+    expect(product).not.toBeInstanceOf(Error);
+
+    if (!(product instanceof Error)) {
+      expect(product.quantity).toBe(2);
     }
   });
 });
