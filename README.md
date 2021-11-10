@@ -20,6 +20,14 @@
 7. photo
 8. user_id
 
+# CART
+
+1. id
+2. user_id
+3. product_id
+4. quantity
+5. price
+
 # FUNCTIONALITIES
 
 - [x] CREATE USER AND RETURN JWT TOKEN
@@ -36,3 +44,6 @@
 - [x] EDIT USER
 - [x] UPDATE PRODUCT IMAGE
 - [x] UPDATE USER IMAGE
+- [x] ADD PRODUCT TO CART
+- [x] UPDATE CART
+- [x] REMOVE PRODUCT FROM CART
