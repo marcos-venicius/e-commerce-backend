@@ -36,7 +36,7 @@ class AddToCartService {
       },
       {
         where: {
-          product_id: this.#productId,
+          id: this.#productId,
         },
       },
     );
@@ -91,8 +91,16 @@ class AddToCartService {
         },
       );
     }
+    await this.#removeProductQuantity(product.quantity - this.#quantity);
 
-    await this.#removeProductQuantity(this.#quantity);
+    const result = await Cart.findOne({
+      where: {
+        user_id: this.#userId,
+        product_id: this.#productId,
+      },
+    });
+
+    return result.toJSON();
   }
 }
 

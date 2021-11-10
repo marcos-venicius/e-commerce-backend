@@ -17,18 +17,10 @@ Cart.init(
     user_id: {
       type: DataTypes.UUIDV4,
       allowNull: false,
-      references: {
-        key: 'id',
-        model: 'users',
-      },
     },
     product_id: {
       type: DataTypes.UUIDV4,
       allowNull: false,
-      references: {
-        key: 'id',
-        model: 'products',
-      },
     },
     quantity: {
       type: DataTypes.INTEGER,
@@ -46,6 +38,15 @@ Cart.init(
     sequelize,
   },
 );
+
+Cart.associations = models => {
+  Cart.belongsTo(models.Product, {
+    foreignKey: 'id',
+  });
+  Cart.belongsTo(models.User, {
+    foreignKey: 'id',
+  });
+};
 
 Cart.sync();
 
