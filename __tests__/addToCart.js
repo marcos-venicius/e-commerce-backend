@@ -10,7 +10,7 @@ const { CreateUserService } = require('../src/services/CreateUserService');
 const { GetProductService } = require('../src/services/GetProductService');
 const { CreateProductService } = require('../src/services/CreateProductService');
 
-const { image } = require('./file.use');
+const image = 'https://picsum.photos/200/200';
 
 jest.setTimeout(10000);
 

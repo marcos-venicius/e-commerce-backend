@@ -5,6 +5,7 @@ const { EditProductImageService } = require('../services/EditProductImageService
 const { GetProductService } = require('../services/GetProductService');
 const { LikeAndDislikeProductService } = require('../services/LikeAndDislikeProductService');
 const { ListProductService } = require('../services/ListProductsService');
+const { UploadImageToS3Service } = require('../services/UploadImageToS3Service');
 
 class ProductController {
   async create(req, res) {
@@ -16,11 +17,24 @@ class ProductController {
       });
     }
 
+    const productUpload = new UploadImageToS3Service();
+
+    const file = Buffer.from(product.photo, 'base64');
+
+    const result = await productUpload.upload('product', file);
+
+    if (result instanceof Error) {
+      return res.status(400).json({
+        message: result.message,
+      });
+    }
+
     const createProductService = new CreateProductService();
 
     const result = await createProductService.execute({
       ...product,
       user_id: req.user_id,
+      photo: result,
     });
 
     if (result instanceof Error) {
