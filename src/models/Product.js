@@ -59,6 +59,7 @@ Product.init(
 Product.associations = models => {
   Product.belongsTo(models.User, {
     as: 'user',
+    onDelete: 'CASCADE',
   });
   Product.hasMany(models.User, {
     foreignKey: 'product_id',

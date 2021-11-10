@@ -7,6 +7,18 @@ class CreateProductService {
     this.required = ['name', 'price', 'photo', 'user_id'];
   }
 
+  /**
+   * @typedef {{
+   * name: string,
+   * price: number,
+   * quantity: number,
+   * description: string,
+   * user_id: string,
+   * photo: string
+   * }} Product product
+   * @param {Product} product product
+   * @returns {Promise<Error | Product>}
+   */
   async execute(product) {
     for (let requiredField of this.required) {
       if (!product[requiredField]) {
