@@ -21,11 +21,11 @@ class ProductController {
 
     const file = Buffer.from(product.photo, 'base64');
 
-    const result = await productUpload.upload('product', file);
+    const updaloadImageResult = await productUpload.upload('product', file);
 
-    if (result instanceof Error) {
+    if (updaloadImageResult instanceof Error) {
       return res.status(400).json({
-        message: result.message,
+        message: updaloadImageResult.message,
       });
     }
 
