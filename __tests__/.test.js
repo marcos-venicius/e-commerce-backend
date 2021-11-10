@@ -1,0 +1,2 @@
+require('./addToCart');
+require('./removeProductFromCart');
