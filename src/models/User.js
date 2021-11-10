@@ -1,6 +1,7 @@
 const { v4 } = require('uuid');
 const { Model, DataTypes } = require('sequelize');
 
+const { Cart } = require('./Cart');
 const { Likes } = require('./Likes');
 const { Product } = require('./Product');
 const { Dislikes } = require('./Dislikes');
@@ -63,15 +64,21 @@ User.hasMany(Product, {
 
 User.hasMany(Likes, {
   as: 'likes_list',
-  foreignKey: "user_id",
-  onDelete: "CASCADE",
-})
+  foreignKey: 'user_id',
+  onDelete: 'CASCADE',
+});
 
 User.hasMany(Dislikes, {
   as: 'dislikes_list',
-  foreignKey: "user_id",
-  onDelete: "CASCADE",
-})
+  foreignKey: 'user_id',
+  onDelete: 'CASCADE',
+});
+
+User.hasMany(Cart, {
+  as: 'cart',
+  foreignKey: 'user_id',
+  onDelete: 'CASCADE',
+});
 
 User.sync();
 
