@@ -1,5 +1,6 @@
 const { v4 } = require('uuid');
 const { Product } = require('../models/Product');
+const { UploadImageToS3Service } = require('./UploadImageToS3Service');
 
 class CreateProductService {
   constructor() {
@@ -16,6 +17,7 @@ class CreateProductService {
    * photo: string
    * }} Product product
    * @param {Product} product product
+   * @param {string} product.photo base64
    * @returns {Promise<Error | Product>}
    */
   async execute(product) {
@@ -36,6 +38,16 @@ class CreateProductService {
       return new Error('Already exists a product with this same name');
     }
 
+    const productUpload = new UploadImageToS3Service();
+
+    const file = Buffer.from(product.photo, 'base64');
+
+    const updaloadImageResult = await productUpload.upload('product', file);
+
+    if (updaloadImageResult instanceof Error) {
+      return new Error(updaloadImageResult.message);
+    }
+
     const productItem = await Product.create({
       id: v4(),
       name: product.name,
@@ -44,7 +56,7 @@ class CreateProductService {
       description: product.description || '',
       likes: 0,
       dislikes: 0,
-      photo: product.photo,
+      photo: updaloadImageResult,
       user_id: product.user_id,
     });
 

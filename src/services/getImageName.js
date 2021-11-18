@@ -1,4 +1,4 @@
-function getImageName(url="") {
+function getImageName(url="", withExtension=false) {
   const split = url.split('/')[4];
 
   const letters = split.split('').reverse();
@@ -7,7 +7,7 @@ function getImageName(url="") {
   let foundDot = false;
 
   for (let letter of letters) {
-    if (!foundDot) {
+    if (!foundDot && !withExtension) {
       if (letter === '.') {
         foundDot = true;
       }
