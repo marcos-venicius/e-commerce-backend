@@ -7,12 +7,24 @@ const { UserLoginService } = require('../services/UserLoginService');
 
 class UserController {
   async create(req, res) {
-    const { username, email, password, photo } = req.body;
+    const {
+      username = undefined,
+      email = undefined,
+      password = undefined,
+      photo = undefined,
+    } = req.body;
+
+    if (!username || !email || !password || !photo) {
+      return res.status(400).json({
+        message: 'Por favor informe os dados do usuário',
+      });
+    }
 
     const createUserService = new CreateUserService();
     const uploadImageToS3Service = new UploadImageToS3Service();
 
     const user = await createUserService.exists(email);
+
     if (user instanceof Error) {
       return res.status(400).json({
         message: user.message,

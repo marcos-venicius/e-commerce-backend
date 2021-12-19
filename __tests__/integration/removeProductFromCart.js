@@ -1,6 +1,6 @@
-const { User } = require('../src/models/User');
-const { Product } = require('../src/models/Product');
-const { RemoveProductFromCart } = require('../src/services/RemoveProductFromCart');
+const { User } = require('../../src/models/User');
+const { Product } = require('../../src/models/Product');
+const { RemoveProductFromCart } = require('../../src/services/RemoveProductFromCart');
 
 describe('Remove product from cart', () => {
   test('removing existing product from cart', async () => {

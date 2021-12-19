@@ -38,7 +38,7 @@ class CreateUserService {
         },
         this.secret,
         {
-          expiresIn: 60 * 60,
+          expiresIn: "1h",
         },
       );
 

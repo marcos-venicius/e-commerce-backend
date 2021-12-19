@@ -25,24 +25,6 @@ class AddToCartService {
   }
 
   /**
-   * remove quantity of a product
-   * @param {number} quantity new product quantity
-   * @returns {Promise<void>} void
-   */
-  async #removeProductQuantity(quantity) {
-    await Product.update(
-      {
-        quantity,
-      },
-      {
-        where: {
-          id: this.#productId,
-        },
-      },
-    );
-  }
-
-  /**
    * add/update products to/in cart
    */
   async execute() {
@@ -91,7 +73,6 @@ class AddToCartService {
         },
       );
     }
-    await this.#removeProductQuantity(product.quantity - this.#quantity);
 
     const result = await Cart.findOne({
       where: {

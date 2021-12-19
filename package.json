@@ -9,10 +9,8 @@
   "scripts": {
     "dev": "nodemon src/index.js",
     "start": "node src/index.js",
-    "test": "jest --bail --verbose"
-  },
-  "jest": {
-    "testMatch": ["**/__tests__/**/*.test.js"]
+    "test:integration": "jest --bail --verbose --testMatch **/__tests__/integration/*.test.js",
+    "test:unit": "jest --bail --verbose --testMatch **/__tests__/unit/*.test.js"
   },
   "dependencies": {
     "aws-sdk": "^2.1018.0",
@@ -25,7 +23,8 @@
     "morgan": "^1.10.0",
     "sequelize": "^6.8.0",
     "sqlite3": "^5.0.2",
-    "uuid": "^8.3.2"
+    "uuid": "^8.3.2",
+    "yup": "^0.32.11"
   },
   "devDependencies": {
     "@types/express": "^4.17.13",

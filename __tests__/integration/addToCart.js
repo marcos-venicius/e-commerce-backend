@@ -1,26 +1,13 @@
 require('dotenv/config');
-const { User } = require('../src/models/User');
-const { Product } = require('../src/models/Product');
-const { Dislikes } = require('../src/models/Dislikes');
-const { Likes } = require('../src/models/Likes');
-const { Cart } = require('../src/models/Cart');
 
-const { AddToCartService } = require('../src/services/AddToCartService');
-const { CreateUserService } = require('../src/services/CreateUserService');
-const { GetProductService } = require('../src/services/GetProductService');
-const { CreateProductService } = require('../src/services/CreateProductService');
+const { AddToCartService } = require('../../src/services/AddToCartService');
+const { CreateUserService } = require('../../src/services/CreateUserService');
+const { GetProductService } = require('../../src/services/GetProductService');
+const { CreateProductService } = require('../../src/services/CreateProductService');
 
 const image = 'https://picsum.photos/200/200';
 
 jest.setTimeout(10000);
-
-beforeAll(async () => {
-  await User.destroy({ truncate: true });
-  await Product.destroy({ truncate: true });
-  await Dislikes.destroy({ truncate: true });
-  await Likes.destroy({ truncate: true });
-  await Cart.destroy({ truncate: true });
-});
 
 describe("TEST 'ADD/UPDATE TO/IN CART' SERVICE", () => {
   let userId;
@@ -74,7 +61,7 @@ describe("TEST 'ADD/UPDATE TO/IN CART' SERVICE", () => {
     expect(product).not.toBeInstanceOf(Error);
 
     if (!(product instanceof Error)) {
-      expect(product.quantity).toBe(3);
+      expect(product.quantity).toBe(5);
     }
   });
 
@@ -96,7 +83,7 @@ describe("TEST 'ADD/UPDATE TO/IN CART' SERVICE", () => {
     expect(product).not.toBeInstanceOf(Error);
 
     if (!(product instanceof Error)) {
-      expect(product.quantity).toBe(2);
+      expect(product.quantity).toBe(5);
     }
   });
 });
