@@ -4,6 +4,7 @@ const { EditUserService } = require('../services/EditUserService');
 const { GetUserInformationService } = require('../services/GetUserInformationService');
 const { UploadImageToS3Service } = require('../services/UploadImageToS3Service');
 const { UserLoginService } = require('../services/UserLoginService');
+const { Validations } = require('../services/Validations');
 
 class UserController {
   async create(req, res) {
@@ -17,6 +18,14 @@ class UserController {
     if (!username || !email || !password || !photo) {
       return res.status(400).json({
         message: 'Por favor informe os dados do usuário',
+      });
+    }
+
+    try {
+      Validations.email(email).phone(phone).password(password);
+    } catch (e) {
+      return res.status(400).json({
+        message: e.message,
       });
     }
 

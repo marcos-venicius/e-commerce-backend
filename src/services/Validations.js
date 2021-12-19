@@ -6,6 +6,7 @@ class Validations {
    * @param {String} email email to validate
    */
   static email(email = '') {
+    email = String(email);
     const shape = yup.object().shape({
       email: yup
         .string()
@@ -27,6 +28,7 @@ class Validations {
    * @param {String} phone phone to validate
    */
   static phone(phone = '') {
+    phone = String(phone);
     const shape = yup.object().shape({
       phone: yup
         .string()
@@ -52,6 +54,7 @@ class Validations {
    * @param {String} password password to check
    */
   static password(password = '') {
+    password = String(password);
     const shape = yup.object().shape({
       password: yup
         .string()
